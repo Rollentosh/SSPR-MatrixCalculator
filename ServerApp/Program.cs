@@ -10,7 +10,7 @@ public static class Program
         app.MapPost("/average", (double[][] matrix) =>
         {
             double result = MatrixCalculator.CalculateAverage(matrix);
-            Console.WriteLine($"[Сервер] Получена матрица. Среднее арифметическое: {result}");
+            Console.WriteLine($"[Server] Matrix received. Arithmetic mean: {result}");
             return Results.Ok(result);
         });
 

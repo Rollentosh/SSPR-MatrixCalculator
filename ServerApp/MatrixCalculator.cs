@@ -5,7 +5,7 @@ public static class MatrixCalculator
     public static double CalculateAverage(double[][] matrix)
     {
         if (matrix == null || matrix.Length == 0)
-            throw new ArgumentException("Матрица не может быть пустой");
+            throw new ArgumentException("Matrix cannot be empty");
 
         double sum = 0;
         int count = 0;

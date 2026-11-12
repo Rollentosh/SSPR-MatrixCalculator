@@ -8,10 +8,10 @@ public static class Program
     {
         string serverUrl = Environment.GetEnvironmentVariable("SERVER_URL") ?? "http://localhost:5000";
 
-        Console.Write("Введите количество строк матрицы: ");
+        Console.Write("Enter the number of matrix rows: ");
         int rows = int.Parse(Console.ReadLine() ?? "0");
 
-        Console.Write("Введите количество столбцов матрицы: ");
+        Console.Write("Enter the number of matrix columns: ");
         int cols = int.Parse(Console.ReadLine() ?? "0");
 
         double[][] matrix = new double[rows][];
@@ -25,10 +25,10 @@ public static class Program
 
             if (!randomGenerate)
             {
-                Console.WriteLine($"Введите {cols} чисел для строки {i + 1} через пробел (или '-' для автозаполнения всей матрицы):");
+                Console.WriteLine($"Enter {cols} numbers for row {i + 1} separated by spaces (or '-' to auto-fill the entire matrix):");
                 parts = (Console.ReadLine() ?? "").Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                if (parts.Length > 0 && parts.Equals("-")) { randomGenerate = true; }
+                if (parts.Length > 0 && parts[0].Equals("-")) { randomGenerate = true; }
             }
 
             for (int j = 0; j < cols; j++)
@@ -38,7 +38,7 @@ public static class Program
         }
 
         using HttpClient client = new HttpClient();
-        Console.WriteLine($"[Клиент] Отправка данных на {serverUrl}/average ...");
+        Console.WriteLine($"[Client] Sending data to {serverUrl}/average ...");
 
         try
         {
@@ -46,11 +46,11 @@ public static class Program
             response.EnsureSuccessStatusCode();
 
             double average = await response.Content.ReadFromJsonAsync<double>();
-            Console.WriteLine($"[Клиент] Ответ от сервера (среднее арифметическое): {average}");
+            Console.WriteLine($"[Client] Response from server (arithmetic mean): {average}");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[Ошибка] Не удалось связаться с сервером: {ex.Message}");
+            Console.WriteLine($"[Error] Failed to connect to the server: {ex.Message}");
         }
     }
 }
