@@ -1,4 +1,4 @@
-FROM ://microsoft.com AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 COPY ServerApp/ServerApp.csproj ServerApp/
@@ -8,13 +8,11 @@ RUN dotnet restore ServerApp.Tests/ServerApp.Tests.csproj
 COPY . .
 
 RUN dotnet test ServerApp.Tests/ServerApp.Tests.csproj --no-restore
-
 RUN dotnet publish ServerApp/ServerApp.csproj -c Release -o /app/publish --no-restore
 
-FROM ://microsoft.com
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 COPY --from=build /app/publish .
 
 EXPOSE 5000
-
 ENTRYPOINT ["dotnet", "ServerApp.dll"]
