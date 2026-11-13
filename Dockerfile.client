@@ -1,0 +1,17 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+COPY ["ClientApp/ClientApp.csproj", "ClientApp/"]
+RUN dotnet restore "ClientApp/ClientApp.csproj"
+
+COPY . .
+WORKDIR "/src/ClientApp"
+RUN dotnet publish "ClientApp.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/runtime:10.0 AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+
+ENV SERVER_URL=http://localhost:5000
+
+ENTRYPOINT ["dotnet", "ClientApp.dll"]
