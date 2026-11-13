@@ -2,6 +2,7 @@
   <Folder Name="/Элементы решения/">
     <File Path="Dockerfile" />
     <File Path="Dockerfile.client" />
+    <File Path="Dockerfile.server" />
   </Folder>
   <Project Path="ClientApp/ClientApp.csproj" />
   <Project Path="ServerApp.Tests/ServerApp.Tests.csproj" />
